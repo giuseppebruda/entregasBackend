@@ -24,26 +24,19 @@ class productManager {
     addProduct = async (product) => {
         try {
             const products = await this.getProduct();
-            //definimos el modelo del objeto a agregar 
-            product = {
-                title,
-                description,
-                price,
-                thumbnail,
-                code,
-                stock,
-            }
+            
+            
             // generacion del id autoincrementable
-            if (product.length === 0) {
+            if (products.length === 0) {
             product.id = 1;
             }else{
-            product.id = product[product.length -1].id + 1;
+            product.id = products[products.length -1].id + 1;
             }
             //no retetir el code
-            if (product.some(product => product.code === code)) {
-            console.log(" el campo CODE de cada producto debe ser unico y no puede repetirse");
-            return
-            }
+            // if (products.some(product => product.code === code)) {
+            // console.log(" el campo CODE de cada producto debe ser unico y no puede repetirse");
+            // return
+            // }
             //validacion
             // if (!title || !description|| !price || !thumbnail || !code || !stock) {
             // console.error("ingresa todos los datos")
