@@ -1,0 +1,11 @@
+[
+	{
+		"title": "actializado",
+		"description": "este es un producto de prueba",
+		"price": 20,
+		"thumbnail": "sin imagen",
+		"code": "abc122",
+		"stock": 25,
+		"id": 1
+	}
+]

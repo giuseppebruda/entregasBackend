@@ -32,6 +32,12 @@ const delateProduct = async (id) => {
     const eliminar = await manager.delateProduct(id)
     console.log(eliminar);
 }
+
+const updateProduct = async (id, modificaciones) => {
+    const modificar = await manager.updateProduct(id, modificaciones)
+    console.log(modificar);
+}
 //delateProduct(1)
 //getProductByid(2)
 //env();
+updateProduct(1,{title: "actializado"})

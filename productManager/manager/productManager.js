@@ -1,5 +1,5 @@
 const fs = require ("fs");
-const { title } = require("process");
+
 
 class productManager {
     constructor(path){
@@ -24,7 +24,8 @@ class productManager {
     addProduct = async (product) => {
         try {
             const products = await this.getProduct();
-            
+
+            const {title,description,price,thumbnail,code,stock}=product
             
             // generacion del id autoincrementable
             if (products.length === 0) {
@@ -33,16 +34,16 @@ class productManager {
             product.id = products[products.length -1].id + 1;
             }
             //no retetir el code
-            // if (products.some(product => product.code === code)) {
-            // console.log(" el campo CODE de cada producto debe ser unico y no puede repetirse");
-            // return
-            // }
+            if (products.some(product => product.code === code)) {
+            console.log(" el campo CODE de cada producto debe ser unico y no puede repetirse");
+            return
+            }
             //validacion
-            // if (!title || !description|| !price || !thumbnail || !code || !stock) {
-            // console.error("ingresa todos los datos")
-            // return
+            if (!title || !description|| !price || !thumbnail || !code || !stock) {
+            console.error("ingresa todos los datos")
+            return
 
-            //}
+            }
             //agregando el producto al JSON
             products.push(product)
             await fs.promises.writeFile(this.path, JSON.stringify(products, null, "\t"))
@@ -69,9 +70,18 @@ class productManager {
         }
 
         //updateProduct para modificar producuctos dentro de la bd
-        updateProduct = async (_id) => {
+        updateProduct = async (id,modificaciones) => {
             try {
-                
+                const products = await this.getProduct()
+                const index =  products.findIndex((product) =>{
+                    return product.id === id;
+                })
+                products[index]= {
+                    ...products[index],...modificaciones
+                }
+                await fs.promises.writeFile(this.path, JSON.stringify(products, null, "\t"))
+                return products
+
             } catch (error) {
                 console.log(error);
             }
