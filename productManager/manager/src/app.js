@@ -21,7 +21,8 @@ app.get("/product", async(req,res)=>{
 // creando la ruta con path params
 
 app.get("/product/:pid",async(req,res)=>{
-    const getProductByid = await manager.getProductByid(req.params.id);
+    let productId = parseInt(req.params.id)
+    const getProductByid = await manager.getProductByid(productId);
     res.send(getProductByid)
 
 })
