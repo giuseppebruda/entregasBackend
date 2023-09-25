@@ -11,7 +11,7 @@ const env = async () =>{
         description: "este es un producto de prueba",
         price: 20,
         thumbnail:"sin imagen",
-        code : "abc122",
+        code : "abc1223",
         stock: 25
     }
 
@@ -37,7 +37,7 @@ const updateProduct = async (id, modificaciones) => {
     const modificar = await manager.updateProduct(id, modificaciones)
     console.log(modificar);
 }
-//delateProduct(1)
+delateProduct(2)
 //getProductByid(2)
 //env();
-updateProduct(1,{title: "actializado"})
+//updateProduct(1,{title: "actializado"})
