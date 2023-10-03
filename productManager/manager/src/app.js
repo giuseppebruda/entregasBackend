@@ -1,30 +1,13 @@
 import express from "express";
-import productManager from "./productManager.js"
+import productRouter from "./routes/producs.router"
+
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 
-const manager = new productManager("./files/product.json")
-
-//creando la ruta con queryparams
-
-app.get("/product", async(req,res)=>{
-    const product = await manager.getProduct();
-    const limit = parseInt(req.query.limit);
-    if(limit){
-        const result =  product.slice(0,limit)
-        res.send(result)
-    }res.send(product)
-    
-    })
+app.use("/api/prducts", productRouter)
 
 
-// creando la ruta con path params
-
-app.get("/product/:pid",async(req,res)=>{
-    let productId = parseInt(req.params.id)
-    const getProductByid = await manager.getProductByid(productId);
-    res.send(getProductByid)
-
-})
 
 app.listen(8080, ()=> console.log("listening on port 8080"));
