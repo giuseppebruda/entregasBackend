@@ -1,21 +1,16 @@
 import fs from "fs"
 
 
-export default class productManager { 
+class ProductManager { 
     constructor(path){
         this.path = path;
     }
     //getProduct para crear el archivo o leer lo que ya exista 
     getProduct = async () => {
         try {
-            if (fs.existsSync(this.path)) {
-                
                 const data = await fs.promises.readFile(this.path, "utf-8");
-                const users = JSON.parse(data);
-                return users;
-            } else{
-                return [];
-            }
+                const products = JSON.parse(data);
+                return products;
         } catch (error) {
             console.log(error);
         }
@@ -80,7 +75,8 @@ export default class productManager {
                     ...products[index],...modificaciones
                 }
                 await fs.promises.writeFile(this.path, JSON.stringify(products, null, "\t"))
-                return products
+
+                return products[index]
 
             } catch (error) {
                 console.log(error);
@@ -102,6 +98,7 @@ export default class productManager {
         }
 }
 
+export default ProductManager
 // module.exports = {
 //     productManager
 // }

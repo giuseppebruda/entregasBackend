@@ -1,13 +1,18 @@
 import { Router } from "express";
-import cardManager from "./cardManager.js"
+import CardManager from "../cardManager.js"
 
 
-const manager = new cardManager ("./files/card.json")
+const manager = new CardManager ("./src./files/card.json")
 const router = Router()
 
 router.post("/", async (req,res) =>{
-    addproduct= await manager.addproduct
-    res.send({status: "success", menssage: "product created"})
+    try {
+        await manager.addCart()
+        res.send({status: "success", menssage: "cart created"})
+        
+    } catch (error) {
+        res.send({error: error})
+    }
 })
 
 router.get("/:pid",async(req,res)=>{
@@ -16,7 +21,23 @@ router.get("/:pid",async(req,res)=>{
     if (!cardId) {
         res.status(404).send({status: "error", error:"card not found"})
     } else {
-        res.send ({status : subccess, payload: getProductByIdc})
+        res.send ({status : "success", payload: getProductByIdc})
+    }
+})
+
+router.post("/:cid/product/:pid/:cantidad", async(req,res)=>{
+    try {
+        const idCart = parseInt(req.params.pid)
+        const id = parseInt(req.params.pid)
+        const cantidad = parseInt(req.params.cantidad)
+        const addProduct = await manager.addProductByCard(idCart,id,cantidad)
+    if (!idCart||!id||!cantidad) {
+        res.status(400).send({status: "error", error:"incomplete values"})
+    } else {
+        res.send ({status : "success", payload: addProduct})
+    }
+    } catch (error) {
+        res.send({error: error})
     }
 })
 

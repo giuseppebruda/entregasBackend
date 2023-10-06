@@ -1,7 +1,7 @@
 import { Router } from "express";
-import productManager from "./productManager.js"
+import ProductManager from "../productManager.js"
 
-const manager = new productManager("./files/product.json")
+const manager = new ProductManager("./src/files/product.json")
 const router = Router();
 
 
@@ -26,31 +26,33 @@ router.get("/", async(req,res)=>{
     })
 
     router.post("/", async(req,res) =>{
-        if(!title||!description||price||code||stock){
-        return res.status(400).send({status: "erro", error:"incomplete values"})
-        }else{
-            addProduct = await manager.addProduct()
-            res.send({status: "success", menssage: "product created"})
+        try {
+            const product = req.body
+            let addProduct = await manager.addProduct(product)
+            res.send({ status: "success", payload: addProduct })
+    
+        } catch (error) {
+            res.status(500).send({ error: error })
         }
     })
 
-    router.put("/pid", async(req,res)=>{
+    router.put("/:pid", async(req,res)=>{
         const id = parseInt(req.params.pid);
-        const {title,description,price,code,stock,thumnail} =req.body;
-        const update = await manager.updateProduct(id, title,description,price,code,stock,thumnail)
-        res.send ({status : subccess, payload: update})
+        const modificaciones = req.body;
+        const update = await manager.updateProduct(id, modificaciones)
+        res.send ({status : true, payload: update})
         if (id===req.body.id) {
             res.status(404).send({status: "error", error:"product not found"})
         }
     })
 
-    router.delete("/pid", async(req,res) =>{
+    router.delete("/:pid", async(req,res) =>{
         const id = parseInt(req.params.pid);
         const eliminar = manager.delateProduct(id)
         if (id === req.id) {
-            return res.status(404).send({status: "error", error:"user not found"})
+            return res.status(404).send({status: "error", error:"product not found"})
         }else{
-            res.send ({status : subccess, payload: eliminar })
+            res.send ({status : true, payload: `producto eliminado${eliminar}` })
         }
     })
 
