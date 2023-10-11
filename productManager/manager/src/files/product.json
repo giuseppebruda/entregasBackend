@@ -25,5 +25,14 @@
 		"code": "abc123",
 		"stock": 30,
 		"id": 3
+	},
+	{
+		"title": "ferra",
+		"description": "este es un producto de prueba",
+		"price": 28,
+		"thumbnail": "sin imagen",
+		"code": "ab4123",
+		"stock": 30,
+		"id": 4
 	}
 ]

@@ -25,13 +25,12 @@ router.get("/:pid",async(req,res)=>{
     }
 })
 
-router.post("/:cid/product/:pid/:cantidad", async(req,res)=>{
+router.post("/:cid/product/:pid/", async(req,res)=>{
     try {
         const idCart = parseInt(req.params.pid)
         const id = parseInt(req.params.pid)
-        const cantidad = parseInt(req.params.cantidad)
-        const addProduct = await manager.addProductByCard(idCart,id,cantidad)
-    if (!idCart||!id||!cantidad) {
+        const addProduct = await manager.addProductByCard(idCart,id)
+    if (!idCart||!id) {
         res.status(400).send({status: "error", error:"incomplete values"})
     } else {
         res.send ({status : "success", payload: addProduct})

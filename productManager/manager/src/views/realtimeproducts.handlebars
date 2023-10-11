@@ -1,0 +1,18 @@
+<h2>agregar productos</h2>
+<form id="aggForm">
+    <label for="producto">producto:</label>
+    <textarea name="producto" id="producto" required></textarea>
+    <button type="submit"> agregar producto</button>
+</form>
+
+<h2>eliminar productos buscando por id</h2>
+<form id="deleteForm">
+    <label for="productId" name="productId">pon el id que vas a eliminar</label>
+    <input type="text" id="productId" name="productId" required>
+    <button type="submit">eliminar producto</button>
+</form>
+<div id="contenedorDeProductos">
+
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/index.js"></script>

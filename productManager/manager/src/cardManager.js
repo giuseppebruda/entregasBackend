@@ -52,29 +52,26 @@ class CardManager{
             console.log(error);
         }
     }
-        addProductByCard = async (idc,id,cantidad) =>{
-            try {
-                
-            const product = await manager.getProductByid(id);
-            const carrito = array.
-                    find(card => card.idc === idc)
-                    if (buscarCarrito=== undefined) {
-                        console.log("el id de ese carrito no existe")
-                        return
-                    } 
-                    const addProduct = carrito.productos.find(product => product.id === id)
-                    if (addProduct=== undefined) {
-                        cantidad = 1
-                    } else {
-                        cantidad ++
-                    }
-                    carrito.productos.push(product.id,cantidad)
-        
-        
-            } catch (error) {
-                console.log(error);
-            }    
+    async addProductToCart(cartId, productId) {
+        const carts = await this.getCarts();
+        const cart = carts.find((c) => c.id === cartId);
+        if (cart) {
+            const existingProduct = cart.products.find((p) => p.id === productId);
+        if (existingProduct) {
+            existingProduct.quantity++;
+        } else {
+            cart.products.push({ id: productId, quantity: 1 });
         }
+        await promises.writeFile(
+        this.filePath,
+        JSON.stringify(carts, null, 2),
+        "utf-8"
+        );
+        return cart;
+        } else {
+        return null;
+        }
+    }
     }
 
     export default CardManager
